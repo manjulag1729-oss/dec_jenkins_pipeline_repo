@@ -1,0 +1,26 @@
+pipeline {
+    agent 
+    stages {
+        stage('STAGE 1') {
+            steps {
+                sh sleep 5
+                echo 'Hello World'
+            }
+        }
+            stage('STAGE 2') {
+                steps {
+                    sh '''
+                    #!/bin/bash
+                    pwd
+                    ls -lrt
+                    sleep 5
+                    '''
+                    echo 'Hello World'
+                }
+            }
+
+        }   
+    }
+
+
+    
