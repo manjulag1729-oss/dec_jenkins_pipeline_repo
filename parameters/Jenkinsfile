@@ -11,11 +11,17 @@ pipeline {
         stage('STAGE 1') {
             agent { label 'slave3' }
             steps {
-                echo "NAME: ${PARAM1}"
+                echo "NAME: ${params.NAME}"
+                echo "SKIP_TEST: ${params.SKIP_TEST}"
+                echo "BRANCH: ${params.BRANCH}"
+                echo "SKIP_TEST value is: ${params.SKIP_TEST}"
+
+                sh '''
+                echo "NAME: ${NAME}"
                 echo "SKIP_TEST: ${SKIP_TEST}"
                 echo "BRANCH: ${BRANCH}"
                 echo "SKIP_TEST value is: ${SKIP_TEST}"
-                
+                '''
             
             }
         }
