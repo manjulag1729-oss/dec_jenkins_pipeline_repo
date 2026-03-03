@@ -1,0 +1,25 @@
+pipeline {
+    agent none
+    environment {
+        DOCKER_USER = 'satishg'
+        AWS_ACCESS_KEY = 'AKIAIOSFODNN7EXAMPLE'
+    }
+
+    stages {
+
+        stage('STAGE 1') {
+            steps { 
+                echo "DOCKER_USER: ${DOCKER_USER}"
+                echo "AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}"
+            
+
+                sh '''
+
+                    env
+                '''
+            
+            }
+        }
+
+    }
+}
