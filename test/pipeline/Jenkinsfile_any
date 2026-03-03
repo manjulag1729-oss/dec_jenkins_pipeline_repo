@@ -1,4 +1,4 @@
-pipeline { label 'slave1'
+pipeline { 
     agent any
     stages {
         stage('STAGE 1') {
@@ -7,7 +7,7 @@ pipeline { label 'slave1'
                 echo 'Hello World'
             }
         }
-            stage('STAGE 2') {
+            stage('Build') {
                 steps {
                     sh '''
                     #!/bin/bash
