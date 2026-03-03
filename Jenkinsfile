@@ -1,7 +1,11 @@
 pipeline {
-    agent any
+    agent none
     stages {
+        agent {
+            label 'slave2'
+        }
         stage('STAGE 1') {
+            agent { label 'slave3'}
             steps {
             
                 echo 'Hello World'
