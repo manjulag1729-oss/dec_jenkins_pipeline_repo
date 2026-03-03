@@ -1,0 +1,24 @@
+pipeline {
+    agent none
+    parameters {
+        string(name: 'PARAM1', defaultValue: 'default value', description: 'This is a string parameter')
+        booleanParam(name: 'SKIP_TEST', defaultValue: false, description: 'This is a boolean parameter')
+        choice(name: 'BRANCH', choices: ['master', 'staging', 'prod'], description: 'This is a choice parameter')
+    }
+
+    stages {
+
+        stage('STAGE 1') {
+            agent { label 'slave3' }
+            steps {
+                echo "NAME: ${PARAM1}"
+                echo "SKIP_TEST: ${SKIP_TEST}"
+                echo "BRANCH: ${BRANCH}"
+                echo "SKIP_TEST value is: ${SKIP_TEST}"
+                
+            
+            }
+        }
+
+    }
+}
