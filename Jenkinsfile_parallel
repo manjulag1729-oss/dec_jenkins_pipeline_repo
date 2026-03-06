@@ -9,7 +9,7 @@ pipeline {
                     echo "This is stage1 running"
                     sh '''
                     sleep 5
-                    exit 1
+                    
                     '''
                 }
             }
