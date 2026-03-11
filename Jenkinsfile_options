@@ -1,30 +1,37 @@
-pipeline
-agent any
-triggers {
-    cron('H/5 * * * *')
-}
-options {
-    timeout(time: 1, unit: 'MINUTES')
-    retry(3)
-    timestamps()
-    disableConcurrentBuilds()
-}
-stages {
-    stage('STAGE 1') {
-        steps {
-            sh sleep 5
-            echo 'Hello World'
-        }
+pipeline {
+    agent any
+
+    triggers {
+        cron('H/5 * * * *')
     }
-    stage('STAGE 2') {
-        steps {
-            sh '''
-            #!/bin/bash
-            pwd
-            ls -lrt
-            sleep 5
-            '''
-            echo 'Hello World'
+
+    options {
+        timeout(time: 1, unit: 'MINUTES')
+        retry(3)
+        timestamps()
+        disableConcurrentBuilds()
+    }
+
+    stages {
+
+        stage('STAGE 1') {
+            steps {
+                sh 'sleep 5'
+                echo 'Hello World'
+            }
         }
+
+        stage('STAGE 2') {
+            steps {
+                sh '''
+                #!/bin/bash
+                pwd
+                ls -lrt
+                sleep 5
+                '''
+                echo 'Hello World'
+            }
+        }
+
     }
 }
