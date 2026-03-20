@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'ACTION', choices: ['start', 'stop', 'reboot', 'terminate'], description: 'EC2 action to perform')
+        string(name: 'INSTANCE_ID', defaultValue: '', description: 'EC2 Instance ID (e.g. i-0abcd1234efgh5678)')
+        choice(name: 'ENV', choices: ['dev', 'staging', 'prod'], description: 'Environment')
+    }
+
+    stages {
+        stage('Check Environment') {
+            steps {
+                script {
+                    if (params.ENV == "prod") {
+                        error("No changes allowed in production environment!")
+                    }
+                }
+            }
+        }
+
+        stage('Get Instance State') {
+            steps {
+                script {
+                    def state = sh(
+                        script: "aws ec2 describe-instances --instance-ids ${params.INSTANCE_ID} --query 'Reservations[].Instances[].State.Name' --output text",
+                        returnStdout: true
+                    ).trim()
+                    echo "Current state: ${state}"
+                    env.INSTANCE_STATE = state
+                }
+            }
+        }
+
+        stage('Perform EC2 Action') {
+            steps {
+                script {
+                    def now = new Date()
+                    def hour = now.format("HH", TimeZone.getTimeZone("Asia/Kolkata")) as int
+
+                    if (params.ENV != "prod") {
+                        // enforce cost cutting schedule
+                        if (hour < 9 || hour >= 21) {
+                            echo "Outside allowed hours (9AM–9PM). Skipping action."
+                            return
+                        }
+                    }
+
+                    if (params.ACTION == 'start' && env.INSTANCE_STATE == 'stopped') {
+                        sh "aws ec2 start-instances --instance-ids ${params.INSTANCE_ID}"
+                    } else if (params.ACTION == 'stop' && env.INSTANCE_STATE == 'running') {
+                        sh "aws ec2 stop-instances --instance-ids ${params.INSTANCE_ID}"
+                    } else if (params.ACTION == 'reboot' && env.INSTANCE_STATE == 'running') {
+                        sh "aws ec2 reboot-instances --instance-ids ${params.INSTANCE_ID}"
+                    } else if (params.ACTION == 'terminate' && params.ENV != 'prod') {
+                        sh "aws ec2 terminate-instances --instance-ids ${params.INSTANCE_ID}"
+                    } else {
+                        echo "Action ${params.ACTION} not valid for state ${env.INSTANCE_STATE} or environment ${params.ENV}"
+                    }
+                }
+            }
+        }
+    }
+}
