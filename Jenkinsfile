@@ -4,7 +4,7 @@ pipeline {
     stages {
 
         stage('STAGE 1') {
-            agent { label 'slave6' }
+            agent { label 'slave2' }
             steps {
                 echo 'Hello World from slave3'
             }
