@@ -3,7 +3,7 @@ pipeline {
 
     stages {
 
-        stage('STAGE 1') {
+        stage('STAGE 6') {
             agent { label 'slave2' }
             steps {
                 echo 'Hello World from slave3'
