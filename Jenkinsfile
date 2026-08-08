@@ -1,25 +1,31 @@
 pipeline {
-    agent none
+    agent any
 
+    environment {
+        APP = 'frontend'
+        DB_URL = '192.168.28.24'
+        BRANCH = 'main'
+        GIT_URL = 'https://github.com/manjulag1729-oss/ip_app.git'
+        CRED_ID = 'github_hp'
+    }
     stages {
-        stage('Build') {
-            agent { label 'slave1ubuntu' }
+        stage('Environment Variable') {
             steps {
-                sh 'echo "Building..."'
+                script {
+                    echo "${env.APP}: $(env.DB_URL}"
+                }
+                sh "echo ${APP}
             }
         }
-
-        stage('Test') {
-            agent { label 'slave2' }
+        stage('checkout') {
             steps {
-                sh 'echo "Testing..."'
+                git branch: "$env.BRANCH}",
+                    credentialsId: "${env.CRED_ID}"
             }
         }
-
-        stage('Deploy') {
-            agent { label 'slave1ubuntu' }
+        stage('check checkout') {
             steps {
-                sh 'echo "Deploying..."'
+                sh 'ls -lrt'
             }
         }
     }
