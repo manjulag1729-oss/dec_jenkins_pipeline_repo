@@ -21,8 +21,8 @@ pipeline {
         stage('checkout') {
             steps {
                 git branch: "${env.BRANCH}",
-                    credentialsId: "${env.CRED_ID}"
-                    url: "${env.GIT_URL}",
+                    credentialsId: "${env.CRED_ID}",
+                    url: "${env.GIT_URL}"
             }
         }
         stage('check checkout') {
