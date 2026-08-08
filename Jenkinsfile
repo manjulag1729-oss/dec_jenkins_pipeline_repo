@@ -1,21 +1,27 @@
 pipeline {
-    agent none
+    agent any
 
     stages {
 
-        stage('STAGE 1') {
-            agent { label 'slave2' }
+        stage('Build') {
+        
             steps {
-                echo 'Hello World from slave3'
+                sh 'echo "Building..."'
             }
         }
 
-        stage('STAGE 2') {
-            agent { label 'slave1' }
+        stage('Test')
+            
             steps {
-                echo 'Hello World from slave2'
+                sh 'echo "testing..."' 
             }
         }
+
+    stage('Deploy') {
+        steps {
+            sh 'echo "Deploying..."'
+        }
+    }
 
     }
 }
