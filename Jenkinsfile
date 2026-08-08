@@ -1,13 +1,13 @@
 pipeline {
-agent any 
+    agent any 
     stages {
         stage('Test1') {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult:'FAILURE') {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh '''
-                           sleep 10
-                           exit 1
-                           '''
+                        sleep 10
+                        exit 1
+                    '''
                 }
             }
         }
