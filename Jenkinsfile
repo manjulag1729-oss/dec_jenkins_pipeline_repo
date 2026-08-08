@@ -12,14 +12,14 @@ pipeline {
         stage('Environment Variable') {
             steps {
                 script {
-                    echo "${env.APP}: $(env.DB_URL}"
+                    echo "${env.APP}: ${env.DB_URL}"
                 }
                 sh "echo ${APP}
             }
         }
         stage('checkout') {
             steps {
-                git branch: "$env.BRANCH}",
+                git branch: "${env.BRANCH}",
                     credentialsId: "${env.CRED_ID}"
             }
         }
