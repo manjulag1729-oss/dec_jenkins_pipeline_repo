@@ -1,11 +1,10 @@
 pipeline {
-    agent {
-        label 'slave1ubuntu'
-    }
-
+    agent none {
     stages {
 
         stage('Build') {
+            agent {
+                label 'slave1ubuntu'
         
             steps {
                 sh 'echo "Building..."'
@@ -13,6 +12,9 @@ pipeline {
         }
 
         stage('Test') {
+            agent {
+                label 'slave2'
+            }
             
             steps {
                 sh 'echo "testing..."' 
@@ -20,7 +22,11 @@ pipeline {
         }
 
     stage('Deploy') {
+        agent {
+            label 'slave1ubuntu'
+        }
         steps {
+        
             sh 'echo "Deploying..."'
         }
     }
