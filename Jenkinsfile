@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             agent {
                 label 'slave1ubuntu'
+            }
         
             steps {
                 sh 'echo "Building..."'
