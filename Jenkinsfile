@@ -1,33 +1,14 @@
 pipeline {
-    agent any
-
-    environment {
-        APP = 'frontend'
-        DB_URL = '192.168.28.24'
-        BRANCH = 'main'
-        GIT_URL = 'https://github.com/manjulag1729-oss/dec_jenkins_pipeline_repo.git'
-        CRED_ID = 'github_hp'
-    }
+agent any 
     stages {
-        stage('Environment Variable') {
+        stage('Test1') {
             steps {
-                script {
-                    echo "${env.APP}: ${env.DB_URL}"
-                    
+                catchError(buildResult: 'SUCCESS', StageResult:'FAILURE') {
+                    sh '''
+                           sleep 10
+                           exit 1
+                           '''
                 }
-                sh "echo ${APP}"
-            }
-        }
-        stage('checkout') {
-            steps {
-                git branch: "${env.BRANCH}",
-                    credentialsId: "${env.CRED_ID}",
-                    url: "${env.GIT_URL}"
-            }
-        }
-        stage('check checkout') {
-            steps {
-                sh 'ls -lrt'
             }
         }
     }
