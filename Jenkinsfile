@@ -5,15 +5,12 @@ pipeline {
             steps {
                 script {
                     try {
-                        // code that might throw an exception
-                        sh 'some-command-that-might-fail'
+                        // run a real command
+                        sh 'ls -lrt'
                     } catch (Exception e) {
-                        // handling the exception
                         echo "Caught an exception: ${e.message}"
-                        // mark the build as failed
                         currentBuild.result = 'FAILURE'
                     } finally {
-                        // always executed
                         echo "Cleaning up resources..."
                     }
                 }
