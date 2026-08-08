@@ -14,7 +14,7 @@ pipeline {
                 script {
                     echo "${env.APP}: ${env.DB_URL}"
                 }
-                sh "echo ${APP}
+                sh "echo ${APP}"
             }
         }
         stage('checkout') {
