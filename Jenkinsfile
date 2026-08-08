@@ -5,7 +5,7 @@ pipeline {
         APP = 'frontend'
         DB_URL = '192.168.28.24'
         BRANCH = 'main'
-        GIT_URL = 'https://github.com/manjulag1729-oss/ip_app.git'
+        GIT_URL = 'https://github.com/manjulag1729-oss/dec_jenkins_pipeline_repo.git'
         CRED_ID = 'github_hp'
     }
     stages {
