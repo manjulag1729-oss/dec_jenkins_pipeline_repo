@@ -13,6 +13,7 @@ pipeline {
             steps {
                 script {
                     echo "${env.APP}: ${env.DB_URL}"
+                    url: "${env.GIT_URL}"
                 }
                 sh "echo ${APP}"
             }
