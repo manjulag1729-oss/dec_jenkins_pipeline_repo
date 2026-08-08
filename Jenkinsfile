@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     echo "${env.APP}: ${env.DB_URL}"
-                    url: "${env.GIT_URL}"
+                    
                 }
                 sh "echo ${APP}"
             }
@@ -22,6 +22,7 @@ pipeline {
             steps {
                 git branch: "${env.BRANCH}",
                     credentialsId: "${env.CRED_ID}"
+                    url: "${env.GIT_URL}",
             }
         }
         stage('check checkout') {
