@@ -10,7 +10,7 @@ pipeline {
             }
         }
 
-        stage('Test')
+        stage('Test') {
             
             steps {
                 sh 'echo "testing..."' 
@@ -22,6 +22,5 @@ pipeline {
             sh 'echo "Deploying..."'
         }
     }
-
-    }
+}
 }
